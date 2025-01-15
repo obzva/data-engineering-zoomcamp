@@ -1,0 +1,82 @@
+# docker run -it \
+#     -e POSTGRES_USER="root" \
+#     -e POSTGRES_PASSWORD="root" \
+#     -e POSTGRES_DB="ny_taxi" \
+#     -v /Users/obzva/Desktop/data-engineering-zoomcamp/module_1_containerization_and_infrastructure_as_code/2_docker_sql/ny_taxi_postgres_data:/var/lib/postgresql/data \
+#     -p 5432:5432 \
+#     postgres:13
+
+pgcli -h localhost -p 5432 -u root -d ny_taxi
+
+https://d37ci6vzurychx.cloudfront.net/trip-data/yellow_tripdata_2024-09.parquet
+https://www.nyc.gov/assets/tlc/downloads/pdf/data_dictionary_trip_records_yellow.pdf
+
+# docker run -it \
+#     -e PGADMIN_DEFAULT_EMAIL="admin@admin.com" \
+#     -e PGADMIN_DEFAULT_PASSWORD="root" \
+#     -p 8080:80 \
+#     dpage/pgadmin4
+
+docker network create pg-network 
+
+docker run -it \
+    -e POSTGRES_USER="root" \
+    -e POSTGRES_PASSWORD="root" \
+    -e POSTGRES_DB="ny_taxi" \
+    -v /Users/obzva/Desktop/data-engineering-zoomcamp/module_1_containerization_and_infrastructure_as_code/2_docker_sql/ny_taxi_postgres_data:/var/lib/postgresql/data \
+    -p 5432:5432 \
+    --network=pg-network \
+    --name=pg-database \
+    postgres:13
+
+docker run -it \
+    -e PGADMIN_DEFAULT_EMAIL="admin@admin.com" \
+    -e PGADMIN_DEFAULT_PASSWORD="root" \
+    -p 8080:80 \
+    --network=pg-network \
+    --name=admin \
+    dpage/pgadmin4
+
+python ingest_parquet_data.py \
+    --user=root \
+    --password=root \
+    --host=localhost \
+    --port=5432 \
+    --db_name=ny_taxi \
+    --table_name=yellow_taxi_trips \
+    --url=https://d37ci6vzurychx.cloudfront.net/trip-data/yellow_tripdata_2024-09.parquet
+
+docker build -t taxi_ingest .
+
+docker run -it \
+    --network=pg-network \
+    taxi_ingest \
+    --user=root \
+    --password=root \
+    --host=pg-database \
+    --port=5432 \
+    --db_name=ny_taxi \
+    --table_name=yellow_taxi_trips \
+    --url=https://d37ci6vzurychx.cloudfront.net/trip-data/yellow_tripdata_2024-09.parquet
+
+docker run -it \
+    --network=pgnetwork-compose \
+    taxi_ingest \
+    --user=root \
+    --password=root \
+    --host=pgdatabase \
+    --port=5432 \
+    --db_name=ny_taxi \
+    --table_name=yellow_taxi_trips \
+    --url=https://d37ci6vzurychx.cloudfront.net/trip-data/yellow_tripdata_2024-09.parquet    
+
+https://d37ci6vzurychx.cloudfront.net/misc/taxi_zone_lookup.csv
+
+python ingest_csv_data.py \
+    --user=root \
+    --password=root \
+    --host=localhost \
+    --port=5432 \
+    --db_name=ny_taxi \
+    --table_name=zones \
+    --url=https://d37ci6vzurychx.cloudfront.net/misc/taxi_zone_lookup.csv
