@@ -23,3 +23,4 @@ If it looks messy and un-organized, I am sorry.
   - It seems like mixed use of pip and brew might cause some problems
   - Although I didn't set venv in this chapter, using venv surely will blow these problems all gone and make you happy
 - I excluded local database, `ny_taxi_postgres_data`, from git (see `.gitignore`)
+- Considered about using AWS instead of GCP, but decided to follow the course with GCP 'cause I think I don't wanna make this much harder
