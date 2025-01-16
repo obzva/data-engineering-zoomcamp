@@ -1,10 +1,10 @@
 # module 1, 01 docker terraform
 
 # local database
-module_1_containerization_and_infrastructure_as_code/01-docker-terraform/dockerdemo/ny_taxi_postgres_data
+01-docker-terraform/dockerdemo/ny_taxi_postgres_data
 
 # gcp service account key
-module_1_containerization_and_infrastructure_as_code/01-docker-terraform/terrademo/keys
+01-docker-terraform/terrademo/keys
 
 # terraform gitignore
 # Local .terraform directories
