@@ -12,8 +12,6 @@ If it looks messy and un-organized, I am sorry.
 
 ## Module 1: Containerization and Infrastructure as Code
 
-### 01. Docker and Terraform
-
 - Learned Docker and how to run DB and some related things on Docker containers
 - While following this chapter, [Ingesting NY Taxi Data to Postgres](https://www.youtube.com/watch?v=2JM-ziJt0WI&list=PL3MmuxUbc_hJed7dXYoJw8DoCuVHhGEQb&index=6), there was a little issue:
   - NYC no more provides their data in csv format but parquet
@@ -24,3 +22,11 @@ If it looks messy and un-organized, I am sorry.
   - Although I didn't set venv in this chapter, using venv surely will blow these problems all gone and make you happy
 - I excluded local database, `ny_taxi_postgres_data`, from git (see `.gitignore`)
 - Considered about using AWS instead of GCP, but decided to follow the course with GCP 'cause I think I don't wanna make this much harder
+
+## Module 2: Workflow Orchestration
+
+- Repeated similar workflows again and again on local, local with GCP, and GCP instance (Practice makes you.. to be familiar with what you're doing)
+- Thanks to Kestra's Devrel `Will Russell`, it was easy to follow
+- At the end of each tutorials, Will introduced additional workflow with `dbt` but it is just sneak peek for future week courses so I couldn't really get it and I didn't care
+- It was time for handling bunch of `yml` (or `yaml`) files and I feel like I became more familiar with this things e.g. workflows, automation of scripts, etc
+  - Moreover through this chance, I got to know what does it mean by `There is an intersection between data engineering and devops` (I saw it before... I don't remember where)
